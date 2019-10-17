@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<span>Send Message to <select id="from" >
+
+    {% for key, value in optionto.items %}
+    {% if key == optiontoselected %}
+        <option value="{{ key }}" selected>{{ value }}</option>
+    {% else %}
+        <option value="{{ key }}">{{ value }}</option>
+    {% endif %}
+    {% endfor %}
+
+</select><qw id="totype" style="display: none">X</qw>
+<qw id="tocode" style="display: none">all</qw></span>
+{% endblock content %}

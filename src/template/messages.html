@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+</select></span>
+<style>
+.chat-left{
+  display: block !important;
+  padding-top: 2px !important;
+  padding-left:10px!important;
+  padding-bottom:2px !important; 
+  margin:1px;
+  float:left;
+  background-color:sandybrown ;
+  border-radius: 40px 40px 40px 0px;
+  min-height: 0px !important;
+}
+
+.chat-right{
+  display: block !important;
+  padding-top: 2px !important;
+  padding-left:10px!important;
+  padding-bottom:2px !important; 
+  margin:1px;
+  float:right;
+  background-color:rgb(124, 168, 250);
+  border-radius: 40px 40px 0px 40px;
+  min-height: 0px !important;
+}
+.clear { clear:both; min-height: 0px !important;padding: 0px!important;margin:0px!important;}
+</style>
+<div style="height: 400px;overflow-y: scroll;border: solid black 1px; border-radius: 5px; "> 
+        {% for key, value in msgs.items %}
+        {% load remnum %}
+        {% load dickeyval %}
+        {% if value.2 != mecode %}   
+        <div class='chat-left'>
+        <small style="font-size: 12px;color:rgb(146, 252, 146)">{{ key|remno }} </small><br><b>{{ value.0 }}</b>
+        </div>
+        {% endif %}
+        {% if value.2 == mecode %}
+        <div class='chat-right'>
+        <small style="font-size: 12px;margin: 0px;padding: 0px;color:blue;">{{ key|remno }} </small><br><mm style="display:table-cell;margin:0px;padding:0px;font-weight:bold;text-align:right;">{{ value.0 }}</mm>
+        </div>
+        {% endif %}
+        <div class="clear"></div>
+        {% endfor %}
+</div>
+{% csrf_token %}
+{% ifnotequal None expt %}
+<p id="alertformsg"></p>
+<script>setTimeout(function(){ alert('{{expt}}'); });</script>
+{% endifnotequal %}
+
+{% if noti != 'None' %}
+<style>
+.notification {
+    background-color: #ddd;
+    border: none;
+    color: black;
+    width:400px !important;
+    padding: 8px !important;
+    font-size: 16px !important;
+    right: -360px !important;
+    opacity: 0.6 ;
+    transition: transform 0.3s;
+  }
+  
+  .notification:hover {
+    transform:translateX(-360px) skewX(15deg);
+    background-color: #3e8e41;
+    opacity: 1;
+    color: white;
+  }
+
+  .notification1 {
+    width:400px !important;
+    padding: 8px !important;
+    right: -360px !important;
+  }
+</style><div class="notification1" style="position: fixed; bottom:50%;float:right; width:30%;">
+{% for key, value in noti.items %}
+<div class="notification" id="ndiv{{ forloop.counter }}" onclick="mrkrd({{ forloop.counter }})" style=" cursor:pointer;margin:1px;padding:1px;background-color: #99bcfd;color: white;min-height: 30px;border: solid 1px burlywood;overflow: auto;">You have a message from {{ key|remno }} : {{ value|dickeyval:forloop.counter|safe }} <p style="display: inline;color:darkmagenta;" align="right">Click to close !  </pstyle></p><p style="display: inline;color:crimson;" align="right">X</p></div>
+{% endfor %}
+</div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Training Management System | {% block title %} {{ title }} {% endblock title %}</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'pure.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body background="{% static 'back.jpg' %}">
+{% if request.path != '/messages/' and request.path != '/chat/' and request.path != '/sndto/' %} <div class="container-fluid"> {% else %} <div class="container-fluid" style="min-height:0px !important;"> {% endif %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Oswald|Ubuntu&display=swap" rel="stylesheet">
+{% if request.path != '/messages/' and request.path != '/chat/' and request.path != '/sndto/' %}
+<h1 style="color: rgb(19, 12, 18);text-align:center;font-family: 'Open Sans Condensed', sans-serif;">Trainee Management System</h1>
+<br><br>
+{% endif %}
+{% block content %}
+This gets replaced in file which extends this base.html
+{% endblock %}
+
+</div>
+<script src="/static/messages.js"></script>
+<oi id="rsoi" style="display:none;" ></oi>
+{% if request.path != '/messages/' and request.path != '/chat/' and request.path != '/sndto/' %}
+<avinashkarhana style="border-radius: 5px;padding: 4px;background: rgba(183, 179, 238, 0.562);position: fixed; bottom:15px;float:right;right:18px;">Developed By: <a href="https://www.google.com/search?q=Avinash+Karhana">Avinash Karhana</a></avinashkarhana>
+{% endif %}
+<script>
+var input = document.getElementById("message");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   sendmessage();
+  }
+});</script>
+</body>
+
+</html>

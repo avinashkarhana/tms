@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Login" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+
+{% block content %}
+<style>
+    avinashk {
+        margin-left:auto;
+        margin-right:auto;
+        width:170px;
+    }
+
+    input {
+        width: 100% !important;
+    }
+    label {
+        font-family: 'Ubuntu', sans-serif;font-size: 20px;
+    }
+</style>
+<h2 style="color: White;font-family: 'Open Snas Condensed', sans-serif;">Login Panel</h2><br><br>
+<div style="margin-left: auto;margin-right:auto;width:40%; ">
+<form class="pure-form  pure-form-stacked" method="POST">
+    {% csrf_token %}
+   <avinashk> {{ form }} </avinashk>
+    <br><br><br>
+<input class="pure-button pure-button-primary" style="margin-left:auto;margin-right:auto;" type='submit' value='login' />
+</form>
+</div>
+{% ifnotequal None expt %}
+<script>alert(" {{ expt }} ");</script>
+{% endifnotequal %}
+{% endblock content %}

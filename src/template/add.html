@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Register" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+
+{% block content %}
+<style>ak{display: inline-block;}input{width:200px;}select{width:200px;}</style>
+<h2 style="margin: 2px;padding:2px;">Register Module</h2><br>
+<bread class='pure-button' id="BT" style="margin:10px;" onclick="avinashkarhana('T')">Trainee Registeration</bread>
+<bread class='pure-button' id="BM" style="margin:10px;" onclick="avinashkarhana('M')">Mentor Registeration</bread>
+<bread class='pure-button' id="BG" style="margin:10px;" onclick="avinashkarhana('G')">Group Registeration</bread>
+<a class='pure-button pure-button-primary' href="/login/" style="margin:30px;right: 0;position: absolute;" >Home</a>
+<div id="T" style="display:none;" >
+    <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+    {% csrf_token %}<table>
+    {% for field1 in formT %}
+        {% if field1.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Department:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_fname">Fname:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Father's Name:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_mname">Mname:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Mother's Name:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_mcode">Mcode:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Mentor:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_proj">Proj:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Project:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_dob">Dob:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Date of Birth:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_gcode">Gcode:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Group:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_dur">Dur:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Duration:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_qual">Qual:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Highest Qualification:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_rep_date">Rep date:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Reporting Date:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_proj_assign_date">Proj assign date:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Project Assignement Date:</label></td><td>{{ field1 }}</td></tr>
+        {% elif field1.label_tag == '<label for="id_proj_sub_date">Proj sub date:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Project Submission Date:</label></td><td>{{ field1 }}</td></tr>
+
+        {% else %}
+        {{ field1.errors }}
+        <tr><td>{{ field1.label_tag }}</td><td>{{ field1 }}</td></tr>
+        {% endif %}
+    {% endfor %}
+    </table><input type="hidden" name="Save Trainee" value="1" />
+    <br>
+    <input type="submit" class="pure-button-primary" value="Save Trainee" />
+    </form>
+</div>
+<div id="M" style="display:none;" >
+    <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+    {% csrf_token %}<table>
+    {% for field1 in formM %}
+        {% if field1.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+        {{ field1.errors }}
+        <tr><td><label>Department:</label></td><td>{{ field1 }}</td></tr>
+        {% else %}
+        {{ field1.errors }}
+        <tr><td>{{ field1.label_tag }}</td><td>{{ field1 }}</td></tr>
+        {% endif %}
+    {% endfor %}
+    </table><input type="hidden" name="Save Mentor" value="1" />
+    <br>
+    <input type="submit" class="pure-button-primary" value="Save Mentor" />
+    </form>
+</div>
+<div id="G" style="display:none;" >
+        <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+        {% csrf_token %}<table>
+        {% for field2 in formG %}
+            {% if field2.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+            {{ field2.errors }}
+            <tr><td><label>Department:</label></td><td>{{ field2 }}</td></tr>
+            {% elif field2.label_tag == '<label for="id_mcode">Mcode:</label>' %}
+            {{ field2.errors }}
+            <tr><td><label>Mentor:</label></td><td>{{ field2 }}</td></tr>    
+            {% else %}
+            {{ field2.errors }}
+            <tr><td>{{ field2.label_tag }}</td><td>{{ field2 }}</td></tr>
+            {% endif %}
+        {% endfor %}
+        </table><input type="hidden" name="Save Group" value="1" />
+        <br>
+        <input type="submit" class="pure-button-primary" value="Save Group" />
+        </form>
+    </div>
+    <qq id="resp" style="display: none;">{{ respo }}</qq>
+<script>
+if (document.getElementById('resp').innerHTML!=""){alert(document.getElementById('resp').innerHTML);}    
+function avinashkarhana(a){
+    if(a=='M'){
+        var px=document.getElementById('BM').style.color
+        if(px!="blue")
+        {    
+        document.getElementById('BT').style.color=px;
+        document.getElementById('BG').style.color=px;}
+        document.getElementById('BM').style.color="Blue";
+        document.getElementById('T').style.display="none";
+        document.getElementById('G').style.display="none";
+        document.getElementById('M').style.display="block";
+    }
+    if(a=='T'){
+        var px=document.getElementById('BT').style.color
+        if(px!="blue")
+        {    
+        document.getElementById('BM').style.color=px;
+        document.getElementById('BG').style.color=px;}
+        document.getElementById('BT').style.color="Blue";
+        document.getElementById('M').style.display="none";
+        document.getElementById('G').style.display="none";
+        document.getElementById('T').style.display="block";
+    }
+    if(a=='G'){
+        var px=document.getElementById('BG').style.color
+        if(px!="blue")
+        {    
+            document.getElementById('BM').style.color=px;
+            document.getElementById('BT').style.color=px;
+            }
+        document.getElementById('BG').style.color="Blue";
+        document.getElementById('M').style.display="none";
+        document.getElementById('T').style.display="none";
+        document.getElementById('G').style.display="block";
+    }
+}
+</script>
+{% endblock content %}

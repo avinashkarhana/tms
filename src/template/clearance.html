@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Clearance Panel" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+{% block content %}
+{% if alert != 'None' %}
+<script>alert("{{alert}}");</script>
+{% endif %}
+<h2 align="center"><u>Clearance Panel</u></h2><br>
+<span align="left"><b>User : </b>{{ user }}</span>
+<span align="right">
+    <form id="frm" style="display: inline;position: absolute;right: 0px;" action="/login/" method="POST">
+        {% csrf_token %} 
+        <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('frm').submit();" class="pure-button pure-button-primary" name="logout" value="Logout">Logout</button>
+    </form>
+    <style>tr:nth-child(even){background-color: #f2f2f2;} td{padding: 15px;text-align: left;}</style>
+</span><br><br><hr>
+<style>
+.alert {
+    margin: 5px;
+    padding: 20px;
+    background-color: #99bcfd;
+    color: white;
+    border: solid 1px burlywood;
+    box-shadow: grey;
+  }
+  </style>
+<!-- Home Key -->
+<span><form id="homeform" style="display: inline;margin-left: 10px;" action="/login/" method="GET"> 
+    <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('homeform').submit();" class="pure-button pure-button-primary">Home</button>
+</form></span><br><br><br>
+<!-- Trainee request form START -->
+{% if req == 'None' %}
+    {% if rtype == 'T' %}
+        <form action="" method="POST">{% csrf_token %}<input type="hidden" name="makerequest" value="1" /><button class="pure-button pure-button-primarys" type="submit">Request For Clearances</button></form>
+    {% endif %}
+{% endif %}
+{% if req != 'None' %}
+    <h2>Clearance Data of {{ ofcname }} : </h2><br>
+    <table><tr><th>Clearance</th><th>Status</th></tr>
+        {% for key,value in req.items %}
+            {% if value == '0' %}
+            <tr class="alert" style="height:20px;background-color: darkred;color:darkturquoise;"><td>{{ key }}</td><td>Denied</td></tr>
+            {% endif %}
+            {% if value == '1' %}
+            <tr class="alert" style="height:20px;background-color:green;color:darkturquoise;"><td>{{ key }}</td><td>Approved</td></tr>
+            {% endif %}
+            {% if value == '2' %}
+            <tr class="alert" style="height:20px;background-color:orchid;color:darkturquoise;"><td>{{ key }}</td><td>Still Under Request</td></tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endif %}
+<!-- Trainee request form END -->
+
+<!-- Mentor resquest panel START -->
+{% if rtype == 'M' %}
+You are authorised to make Clearance from {{ clname }} !
+        {% if clrof != 'None' %}
+            <br><br>Clearance requests are available form trainees below, select and make your decision.<br<br>
+            <form action="" method="POST">{% csrf_token %}
+            <input type="hidden" name="requestresponse" value="1" /><br><br>
+            {% for key,value in clrof.items %}
+            # {{key}} : <select name="T-{{value}}"><option value="1">Approve Request</option><option value="0">Deny Request</option></select><br>
+            {% endfor %}
+            <br> 
+            <button type="submit">Submit</button>
+            </form>
+        {% else %}
+            No Clearance Request is pending !
+        {% endif %}
+        <!-- For Co-Ordinator -->
+        {% if tdlst != 'None' %}
+        <br><br>Check for clearances of trainees :<br>
+        <script>
+        function sub(){
+            var v =document.getElementById('ofc').value;
+            document.getElementById('ofcname').value=v;
+            document.getElementById('fr23').submit();
+        }
+        </script>
+        <form id="fr23" action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="checkclearance" value="1" />
+            <input type="hidden" name="ofcname" id="ofcname" value="" />
+            <select name="ofc" id="ofc">
+            {{ tdlst }}
+            {% for key,value in tdlst.items %}
+            <option value="{{key}}">{{ value }}</option><br>
+            {% endfor %}
+            </select>
+            <button onclick="sub()">Check</button>
+        </form>
+        {% endif %}
+{% endif %}
+<!-- Mentor resquest panel END -->
+{% endblock content %}

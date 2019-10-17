@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Attendance Panel" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+{% block content %}
+{% if resp != None %} 
+<script>alert("{{ respo }}");</script>
+{% endif %}
+<h2 align="center"><u>Attendance Panel</u></h2><br>
+<span align="left"><b>User : </b>{{ user }}</span>
+<span align="right">
+    <form id="frm" style="display: inline;position: absolute;right: 0px;" action="/login/" method="POST">
+        {% csrf_token %} 
+        <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('frm').submit();" class="pure-button pure-button-primary" name="logout" value="Logout">Logout</button>
+    </form>
+    <style>tr:nth-child(even){background-color: #f2f2f2;} td{padding: 15px;text-align: left;}</style>
+</span><br><br><hr>
+<style>
+.alert {
+    margin: 5px;
+    padding: 20px;
+    background-color: #99bcfd;
+    color: white;
+    border: solid 1px burlywood;
+    box-shadow: grey;
+  }
+  </style>
+<!-- Home Key -->
+<span><form id="homeform" style="display: inline;margin-left: 10px;" action="/login/" method="GET"> 
+    <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('homeform').submit();" class="pure-button pure-button-primary">Home</button>
+</form></span>
+
+{% if atype == 'T' %}
+<span>
+    <input type="hidden" id="arq" value="{{ atype }}">
+    <input type="hidden" id="aof" value="{{ aof }}">
+    <button style="display: inline;margin-right: 15px;" onclick="tcheckattend()" class="pure-button pure-button-primary">{{ bname }}</button>
+</span>
+<select id='tlst' style='display:none;'>
+{% for key,value in tlst.items %}
+<option value="{{ key }}" selected>{{ value }}</option>
+{% endfor %}
+</select>
+{% endif %}
+
+{% if atype == 'M' %}
+<br><hr><br>
+<select id='tlst'>
+{% for key,value in tlst.items %}
+<option value="{{ key }}">{{ value }}</option>
+{% endfor %}
+</select>
+<span>
+    <input type="hidden" id="T" required value="">
+    <input type="hidden" id="aof" required value="">
+    <button style="display: inline;margin-right: 15px;" onclick="tcheckattend()" class="pure-button pure-button-primary">Check Attendance</button>
+</span>
+{% endif %}
+{% if atype == 'C' %}
+<br><hr><br>
+<div>
+<button style="display: inline;margin-right: 15px;" onclick="document.getElementById('attendcheck').style.display='none';markattend();" class="pure-button pure-button-primary">Mark Attendance of Students for Today</button>
+<button style="display: inline;margin-right: 15px;" onclick="if(document.getElementById('attendcheck').style.display=='block'){document.getElementById('attendcheck').style.display='none'}else{document.getElementById('attendcheck').style.display='block'};if(document.getElementById('atmark').style.display=='block'){document.getElementById('atmark').style.display='none';document.getElementById('result').style.display='block'}" class="pure-button pure-button-primary">Check Attendance of Students</button>
+</div>
+<br>
+<span id='attendcheck' style="display:none">
+    <select id='tlst'>
+        {% for key,value in tlst.items %}
+        <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+    </select>
+    <input type="hidden" id="T" required value="">
+    <input type="hidden" id="aof" required value="">
+    <button style="display: inline;margin-right: 15px;" onclick="tcheckattend()" class="pure-button pure-button-primary">Check Attendance</button>
+</span>
+
+<div id="atmark" style="display: none;margin:20px;margin-top:50px;overflow: auto;height:400px;border:solid steelblue 2px;">
+{% if atlst %}
+    <form id="frqw" action="/attendence/" method="GET">First mark all attendances and then click Submit<br><button style="margin-right: 15px;" onclick="document.getElementById('frqw').submit();" class="pure-button pure-button-primary" name="saveattendence" value="saveattendence">Submit</button>
+        <br><br><hr><br><table><tr><th>Name</th><th>Status</th></tr>  
+        {% for key,value in atlst.items %}
+        <tr><td>{{ value }}</td><td><select name='{{ key }}' ><option value="0">Absent</option><option value="1">Present</option></select></td></tr>
+        {% endfor %}
+        </table>
+    </form> 
+{% else %}
+<script>function al(){alert("All Attendance Marked for the Day");document.getElementById('atmark').style.display='none';}</script>
+{% endif %}
+</div>
+{% endif %}
+<div id="result" style="margin:20px;margin-top:50px;overflow: auto;height:400px;border:solid steelblue 2px;"></div>
+
+<!-- Buttons span with mark attendence view -->
+
+<!-- Div for ajax load of choosen button -->
+
+<script src="/static/attendence.js"></script>
+{% endblock content %}

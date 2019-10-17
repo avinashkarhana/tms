@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Chat" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+
+{% block content %}
+<h2 style="margin: 2px;padding:2px;">Chat Module</h2><br><span id='snto'></span>
+<mpnl id='mpnlo'></mpnl>
+<br><span><input style="width:75%;display: inline;" autocomplete="off" type="text" id="message" />   
+    <button id='sendmsg' style="width:23%;display: inline;" onclick="sendmessage()">Send</button></span>
+{% endblock content %}

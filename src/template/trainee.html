@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Trainee Panel" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+{% block content %}
+<h2 align="center"><u>Trainee Panel</u></h2><br>
+<span align="left"><b>User : </b>{{ user }}</span>
+<span align="right">
+    <form id="frm" style="display: inline;position: absolute;right: 0px;" action="/login/" method="POST">
+        {% csrf_token %} 
+        <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('frm').submit();" class="pure-button pure-button-primary" name="logout" value="Logout">Logout</button>
+    </form>
+    <style>tr:nth-child(even){background-color: #f2f2f2;} td{padding: 15px;text-align: left;}</style>
+</span><br><br><hr>
+<style>
+.alert {
+    margin: 5px;
+    padding: 20px;
+    background-color: #99bcfd;
+    color: white;
+    border: solid 1px burlywood;
+    box-shadow: grey;
+  }
+  </style>
+<div class="wrapper">
+<div id="one">
+{% if form %}
+<div class="alert" ><form id='frm1' method="POST" enctype="multipart/form-data">
+<strong>No Image of trainee!</strong>{% csrf_token %}<br>Upload Here  {{ form }}
+<button style="display: inline;" onclick="document.getElementById('frm1').submit();" class="pure-button pure-button-primary">Upload</button>
+</form>
+</div>
+{% else %}
+<span><img src="/static/trainee/{{tcode}}.jpg" height="220" width="150" /></span>
+{% endif %}
+<span><form id="attendenceform" style="display: inline;margin-left: 10px;" action="/attendence/" > 
+  <button style="display: inline;margin-right: 15px;" onclick="document.getElementById('attendenceform').submit();" class="pure-button pure-button-primary">Goto Attendance Panel</button>
+</form></span><span><a style="display: inline;margin-right: 15px;" href="/clearance/" class="pure-button pure-button-primary">Clearance Panel</a></span>
+<br><nb style="font-family: 'Oswald', sans-serif; font-size: 25px;">Personal Details</nb><br><div style="padding: 20px;margin: 10px;">
+    <table style="overflow-x:auto;">
+{% for key, value in details.items %}
+    {% if key != "img" %}
+    <tr><td><nb style="font-family: 'Ubuntu', sans-serif;font-size: 20px;"><b>{{ key|capfirst  }}</b></nb></td><td><nb style="font-family: 'Open Sans Condensed', sans-serif;font-size: 20px;">{{ value|capfirst  }}</nb></td></tr>
+    {% endif %}
+{% endfor %}
+</table></div>
+{% ifnotequal None expt %}
+<script>alert(" {{ expt|striptags }} ");</script>
+{% endifnotequal %}
+</div>
+<style>
+.wrapper { 
+  border : 2px solid #000; 
+  overflow:hidden;
+}
+
+.wrapper div {
+   min-height: 200px;
+   padding: 10px;
+}
+#one {
+  background-color: white;
+  float:left; 
+  margin-right:20px;
+  width:50%;
+  border-right:2px solid #000;
+}
+#two { 
+  background-color: white;
+  overflow:hidden;
+  margin:10px;
+  border:2px dashed #ccc;
+  min-height:170px;
+}
+
+@media screen and (max-width: 400px) {
+   #one { 
+    float: none;
+    margin-right:0;
+    width:auto;
+    border:0;
+    border-bottom:2px solid #000;    
+  }
+}
+</style>
+<div id="two" style="padding-top: 2px;">
+    <div id="chat" style="padding:0;"></div>
+</div></div>
+
+{% endblock content %}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% with title="Edit" %}
+        {{ block.super }}
+    {% endwith%}
+{% endblock title %}
+
+
+{% block content %}<style>ak{display: inline-block;}input{width:200px;}select{width:200px;}</style>
+<h2 style="margin: 2px;padding:2px;" align="center">Edit Module</h2><br>
+<a class='pure-button pure-button-primary' href="/edit/" style="margin:30px;left: 0;position: absolute;" >Edit Other</a>
+<a class='pure-button pure-button-primary' href="/login/" style="margin:30px;right: 0;position: absolute;" >Home</a>
+<!-- Type and Element Selection form -->
+<div style="margin: 20px;margin-top: 90px;padding: 30px;border:solid black 2px;box-shadow: grey;border-radius: 30px;">
+{% if trl != None %}
+Select an option and submit to edit details:<br><br><br><br>
+<ak>Trainee Editor<br>
+<form class="pure-form" style="display:inline-block;" method="GET">
+    <input type="hidden" name='et' value="T" />
+    <select name="ec">
+        {% for key, value in trl.items %}
+            <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+        </select>
+<input class="pure-button" type="submit" />    
+</form></ak>
+{% endif %}
+
+{% if mnl != None %}
+<ak>Mentor Editor<br>
+<form class="pure-form" style="display:inline-block;" style="display:inline-block;" method="GET">
+        <input type="hidden" name='et' value="M" />
+        <select name="ec">
+            {% for key, value in mnl.items %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+            </select>
+    <input class="pure-button" type="submit" />    
+    </form></ak>
+{% endif %}
+
+{% if gpl != None %}
+<ak>Group Editor<br>
+<form class="pure-form" style="display:inline-block;" style="display:inline-block;" method="GET">
+        <input type="hidden" name='et' value="G" />
+        <select name="ec">
+            {% for key in trl %}
+                <option value="{{ key }}">Group-{{ key }}</option>
+            {% endfor %}
+            </select>
+    <input class="pure-button" type="submit" />    
+    </form></ak>
+{% endif %}
+
+<!--Editing Forms-->
+{% if formT != None %}
+<div id="T">
+        <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+        {% csrf_token %} <input type="hidden" name="ec" value="{{ ec }}" /><input type="hidden" name="et" value="{{ et }}" /><table>
+        {% for field1 in formT %}
+            {% if field1.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Department:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_mcode">Mcode:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Mentor:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_proj">Proj:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Project:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_gcode">Gcode:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Group:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_dur">Dur:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Duration:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_qual">Qual:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Highest Qualification:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_proj_assign_date">Proj assign date:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Project Assignement Date:</label></td><td>{{ field1 }}</td></tr>
+            {% elif field1.label_tag == '<label for="id_proj_sub_date">Proj sub date:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Project Submission Date:</label></td><td>{{ field1 }}</td></tr>
+
+            {% else %}
+            {{ field1.errors }}
+            <tr><td>{{ field1.label_tag }}</td><td>{{ field1 }}</td></tr>
+            {% endif %}
+        {% endfor %}
+        </table><input type="hidden" name="Save Trainee" value="1" />
+        <br>
+        <input type="submit" class="pure-button-primary" value="Save Trainee" />
+        </form>
+    </div>
+{% endif %}
+{% if formM != None %}
+<div id="M">
+        <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+        {% csrf_token %} <input type="hidden" name="ec" value="{{ ec }}" /><input type="hidden" name="et" value="{{ et }}" /><table>
+        {% for field1 in formM %}
+            {% if field1.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+            {{ field1.errors }}
+            <tr><td><label>Department:</label></td><td>{{ field1 }}</td></tr>
+            {% else %}
+            {{ field1.errors }}
+            <tr><td>{{ field1.label_tag }}</td><td>{{ field1 }}</td></tr>
+            {% endif %}
+        {% endfor %}
+        </table><input type="hidden" name="Save Mentor" value="1" />
+        <br>
+        <input type="submit" class="pure-button-primary" value="Save Mentor" />
+        </form>
+    </div>
+{% endif %}    
+{% if formG != None %}
+<div id="G">
+        <form action="" class="pure-form pure-form-aligned pure-form-stacked" method="POST">
+        {% csrf_token %} <input type="hidden" name="ec" value="{{ ec }}" /><input type="hidden" name="et" value="{{ et }}" /><table>
+        {% for field2 in formG %}
+            {% if field2.label_tag == '<label for="id_dcode">Dcode:</label>' %}
+            {{ field2.errors }}
+            <tr><td><label>Department:</label></td><td>{{ field2 }}</td></tr>
+            {% elif field2.label_tag == '<label for="id_mcode">Mcode:</label>' %}
+            {{ field2.errors }}
+            <tr><td><label>Mentor:</label></td><td>{{ field2 }}</td></tr>    
+            {% else %}
+            {{ field2.errors }}
+            <tr><td>{{ field2.label_tag }}</td><td>{{ field2 }}</td></tr>
+            {% endif %}
+        {% endfor %}
+        </table><input type="hidden" name="Save Group" value="1" />
+        <br>
+        <input type="submit" class="pure-button-primary" value="Save Group" />
+        </form>
+    </div>
+{% endif %}  
+</div> 
+    <qq id="resp" style="display: none;">{{ respo }}</qq>
+<script>
+if (document.getElementById('resp').innerHTML!=""){alert(document.getElementById('resp').innerHTML);} 
+</script>
+{% endblock content %}
