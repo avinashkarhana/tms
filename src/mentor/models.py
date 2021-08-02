@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 def update_filename(instance, filename):
     import os
     path = "static/mentor/"
-    format = instance.mcode + ".jpg"
+    format = str(instance.mcode) + ".jpg"
     xx=os.path.join(path, format)
     print(xx)
     return (xx)

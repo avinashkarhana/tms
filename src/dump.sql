@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `attendence_attendence`;
 
 
 CREATE TABLE `attendence_attendence` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `tcode` varchar(10) NOT NULL,
   `date` date NOT NULL,
   `datetime` timestamp NOT NULL,
@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `auth_group`;
 
 
 CREATE TABLE `auth_group` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
 ) ;
@@ -73,7 +73,7 @@ DROP TABLE IF EXISTS `auth_group_permissions`;
 
 
 CREATE TABLE `auth_group_permissions` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `group_id` bigint(20) NOT NULL,
   `permission_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `auth_permission`;
 
 
 CREATE TABLE `auth_permission` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `name` varchar(255) NOT NULL,
   `content_type_id` bigint(20) NOT NULL,
   `codename` varchar(100) NOT NULL,
@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `auth_user`;
 
 
 CREATE TABLE `auth_user` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `password` varchar(128) NOT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
@@ -156,7 +156,7 @@ DROP TABLE IF EXISTS `auth_user_groups`;
 
 
 CREATE TABLE `auth_user_groups` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `user_id` bigint(20) NOT NULL,
   `group_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`,`group_id`)
@@ -180,7 +180,7 @@ DROP TABLE IF EXISTS `auth_user_user_permissions`;
 
 
 CREATE TABLE `auth_user_user_permissions` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `user_id` bigint(20) NOT NULL,
   `permission_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`,`permission_id`)
@@ -205,7 +205,7 @@ DROP TABLE IF EXISTS `clearance_clearance`;
 
 CREATE TABLE `clearance_clearance` (
   `cname` varchar(120) NOT NULL,
-  `ccode` bigint(20) NOT NULL,
+  `ccode` bigint(20) ,
   `mcode` varchar(10) NOT NULL,
   PRIMARY KEY (`ccode`)
 ) ;
@@ -229,7 +229,7 @@ DROP TABLE IF EXISTS `crequests_crequests`;
 
 
 CREATE TABLE `crequests_crequests` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `status` varchar(1) NOT NULL,
   `ccode` varchar(10) NOT NULL,
   `tcode` varchar(10) NOT NULL,
@@ -256,7 +256,7 @@ DROP TABLE IF EXISTS `department_department`;
 
 CREATE TABLE `department_department` (
   `name` varchar(120) NOT NULL,
-  `dcode` bigint(20) NOT NULL,
+  `dcode` bigint(20) ,
   PRIMARY KEY (`dcode`)
 ) ;
 
@@ -279,7 +279,7 @@ DROP TABLE IF EXISTS `django_admin_log`;
 
 
 CREATE TABLE `django_admin_log` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `action_time` timestamp NOT NULL,
   `object_id` text,
   `object_repr` varchar(200) NOT NULL,
@@ -309,7 +309,7 @@ DROP TABLE IF EXISTS `django_content_type`;
 
 
 CREATE TABLE `django_content_type` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `app_label` varchar(100) NOT NULL,
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
@@ -334,7 +334,7 @@ DROP TABLE IF EXISTS `django_migrations`;
 
 
 CREATE TABLE `django_migrations` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `app` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `applied` timestamp NOT NULL,
@@ -387,7 +387,7 @@ DROP TABLE IF EXISTS `group_group`;
 CREATE TABLE `group_group` (
   `dcode` varchar(10) NOT NULL,
   `mcode` varchar(10) NOT NULL,
-  `gcode` bigint(20) NOT NULL,
+  `gcode` bigint(20) ,
   PRIMARY KEY (`gcode`)
 ) ;
 
@@ -413,7 +413,7 @@ CREATE TABLE `mentor_mentor` (
   `name` varchar(120) NOT NULL,
   `designation` varchar(120) NOT NULL,
   `dcode` varchar(10) NOT NULL,
-  `mcode` bigint(20) NOT NULL,
+  `mcode` bigint(20) ,
   `co_ord` bigint(20) NOT NULL,
   `mobile` bigint(20) NOT NULL,
   `img` varchar(100) DEFAULT NULL,
@@ -439,7 +439,7 @@ DROP TABLE IF EXISTS `message_message`;
 
 
 CREATE TABLE `message_message` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) ,
   `tocode` varchar(10) NOT NULL,
   `fromcode` varchar(10) NOT NULL,
   `gstatus` bigint(20) NOT NULL,
@@ -470,7 +470,7 @@ DROP TABLE IF EXISTS `trainee_trainee`;
 
 CREATE TABLE `trainee_trainee` (
   `rep_date` date NOT NULL,
-  `tcode` bigint(20) NOT NULL,
+  `tcode` bigint(20) ,
   `name` varchar(120) NOT NULL,
   `fname` varchar(120) NOT NULL,
   `mname` varchar(120) NOT NULL,
