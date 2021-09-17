@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 def update_filename(instance, filename):
     import os
     path = "static/trainee/"
-    format = instance.tcode + ".jpg"
+    format = str(instance.tcode) + ".jpg"
     xx=os.path.join(path, format)
     print(xx)
     return (xx)
@@ -19,7 +19,7 @@ def validate_image(fieldfile_obj):
 
 class trainee(models.Model):
     rep_date    = models.DateField(default='9999-12-31',auto_now=False)
-    tcode       = models.AutoField(max_length=10,unique=True,primary_key=True)
+    tcode       = models.AutoField(unique=True,primary_key=True)
     name        = models.CharField(max_length=120)
     fname       = models.CharField(max_length=120)
     mname       = models.CharField(max_length=120)

@@ -12,4 +12,4 @@ class message(models.Model):
     fromtype = models.CharField(max_length=1)
     gstatus  = models.IntegerField(validators=[ MinValueValidator(0) , MaxValueValidator(1) ], default=0 )
     msg      = models.TextField()
-    dateandtime = models.DateTimeField(default=timezone.now(), blank=True)
+    dateandtime = models.DateTimeField(default=timezone.now, blank=True)

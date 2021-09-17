@@ -356,7 +356,7 @@ def message_view(request,*args,**kwargs):
             from message.models import message
             mecode=request.GET['mecode']
             metype=request.GET['metype']
-            
+            print("\ntocode=",tocode,"\ntotype=",totype,"\nfromcode=",mecode,"\nfromtype=",metype,"\nmsg=",msgs)
             try:
                 from message.models import message
                 message.objects.create(tocode=tocode,totype=totype,fromcode=mecode,fromtype=metype,msg=msgs)
